@@ -16,11 +16,11 @@ if (!isset($_GET['id'])) {
 $vikingId = intval($_GET['id']);
 $data = getBody();
 
-if (!isset($data['weapon'])) {
+if (!isset($data['weaponId'])) {
     returnError(400, 'Missing parameter in body: weaponId');
 }
 
-$weaponId = intval($data['weapon']);
+$weaponId = intval($data['weaponId']);
 
 if ($weaponId !== null) {
     $weapon = findOneWeapon($weaponId);

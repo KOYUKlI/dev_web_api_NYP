@@ -38,7 +38,7 @@ function findAllVikings(string $name = "", int $limit = 10, int $offset = 0) {
 
 function createViking(string $name, int $health, int $attack, int $defense, $weaponId) {
     $db = getDatabaseConnection();
-    $sql = "INSERT INTO viking (name, health, attack, defense, weapon) VALUES (:name, :health, :attack, :defense, :weaponId)";
+    $sql = "INSERT INTO viking (name, health, attack, defense, weaponId) VALUES (:name, :health, :attack, :defense, :weaponId)";
     $stmt = $db->prepare($sql);
     $res = $stmt->execute([
         'name' => $name,
@@ -73,7 +73,7 @@ function updateViking(string $id, string $name, int $health, int $attack, int $d
 
 function updateVikingWeapon(string $vikingId, $weaponId) {
     $db = getDatabaseConnection();
-    $sql = "UPDATE viking SET weapon = :weaponId WHERE id = :id";
+    $sql = "UPDATE viking SET weaponId = :weaponId WHERE id = :id";
     $stmt = $db->prepare($sql);
     $res = $stmt->execute([
         'id' => $vikingId,
