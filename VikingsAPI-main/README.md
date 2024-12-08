@@ -1,4 +1,7 @@
 # TP Vikings
+- PRISSET Noah
+- DANTHON Paulyn
+- BOUSSAHA Yanis
 
 ## Modalités
 
