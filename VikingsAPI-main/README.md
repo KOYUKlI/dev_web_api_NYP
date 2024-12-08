@@ -1,7 +1,7 @@
 # TP Vikings
-- PRISSET Noah
-- DANTHON Paulyn
-- BOUSSAHA Yanis
+- PRISSET Noah (bdd, dans dossier weapon: findOne,find, create)
+- DANTHON Paulyn( dossier weapon: delete, dossier viking: findOne,find,create)
+- BOUSSAHA Yanis (dossier viking: update,delete,addWeapon,findByWeapon)
 
 ## Modalités
 
