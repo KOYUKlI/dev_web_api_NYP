@@ -55,7 +55,7 @@ function createViking(string $name, int $health, int $attack, int $defense, $wea
 
 function updateViking(string $id, string $name, int $health, int $attack, int $defense, $weaponId) {
     $db = getDatabaseConnection();
-    $sql = "UPDATE viking SET name = :name, health = :health, attack = :attack, defense = :defense, weapon = :weaponId WHERE id = :id";
+    $sql = "UPDATE viking SET name = :name, health = :health, attack = :attack, defense = :defense, weaponId = :weaponId WHERE id = :id";
     $stmt = $db->prepare($sql);
     $res = $stmt->execute([
         'id' => $id,
