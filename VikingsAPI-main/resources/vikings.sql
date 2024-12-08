@@ -1,71 +1,37 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Hôte : localhost:8889
--- Généré le : sam. 16 nov. 2024 à 21:47
--- Version du serveur : 8.0.35
--- Version de PHP : 8.2.20
+-- SQL Script to create and populate the database
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+CREATE DATABASE IF NOT EXISTS vikings;
+USE vikings;
 
+-- Table Weapon
+CREATE TABLE IF NOT EXISTS weapon (
+  id INT NOT NULL AUTO_INCREMENT,
+  type VARCHAR(50) NOT NULL,
+  damage INT NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+-- Table Viking
+CREATE TABLE IF NOT EXISTS viking (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL,
+  attack INT NOT NULL,
+  defense INT NOT NULL,
+  health INT NOT NULL,
+  weaponId INT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (weaponId) REFERENCES weapon(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
 
---
--- Base de données : `vikings`
---
+-- Sample data for Weapon
+INSERT INTO weapon (type, damage) VALUES
+('Sword', 50),
+('Axe', 60),
+('Bow', 40);
 
--- --------------------------------------------------------
-
---
--- Structure de la table `viking`
---
-
-CREATE TABLE `viking` (
-  `id` int NOT NULL,
-  `name` varchar(16) NOT NULL,
-  `attack` int NOT NULL,
-  `defense` int NOT NULL,
-  `health` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `viking`
---
-
-INSERT INTO `viking` (`id`, `name`, `attack`, `defense`, `health`) VALUES
-(1, 'Ragnar', 200, 150, 300),
-(2, 'Floki', 150, 80, 350),
-(3, 'Lagertha', 300, 200, 200),
-(4, 'Björn', 350, 200, 100);
-
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `viking`
---
-ALTER TABLE `viking`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `viking`
---
-ALTER TABLE `viking`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- Sample data for Viking
+INSERT INTO viking (name, attack, defense, health, weaponId) VALUES
+('Ragnar', 200, 150, 300, 1),
+('Floki', 150, 80, 350, 2),
+('Lagertha', 300, 200, 200, 3),
+('Björn', 350, 200, 100, NULL);
