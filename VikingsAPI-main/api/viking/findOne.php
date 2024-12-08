@@ -14,7 +14,14 @@ if (!isset($_GET['id'])) {
 }
 
 $viking = findOneViking($_GET['id']);
+
+if($viking['weapon']){
+    $viking['weapon'] = "/weapon/findOne.php?id=" . $viking['weapon'];
+}else{
+    $viking['weapon'] = " ";
+}
+
 if (!$viking) {
     returnError(404, 'Viking not found');
 }
-echo json_encode($viking);
+echo json_encode($viking, JSON_UNESCAPED_SLASHES);

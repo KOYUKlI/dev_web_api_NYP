@@ -3,16 +3,13 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/api/utils/database.php';
 
 function findOneViking(string $id) {
     $db = getDatabaseConnection();
-    $sql = "SELECT v.*, w.type AS weaponType, w.damage AS weaponDamage FROM viking v LEFT JOIN weapon w ON v.weaponId = w.id WHERE v.id = :id";
+    $sql = "SELECT id, name, health, attack, defense, weapon FROM viking WHERE id = :id";
     $stmt = $db->prepare($sql);
     $res = $stmt->execute(['id' => $id]);
     if ($res) {
         $viking = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($viking) {
-            $viking['weapon'] = $viking['weaponId'] ? "/weapon/findOne.php?id=" . $viking['weaponId'] : "";
-            unset($viking['weaponId'], $viking['weaponType'], $viking['weaponDamage']);
-            return $viking;
-        }
+
+        return $viking;
     }
     return null;
 }
@@ -39,9 +36,9 @@ function findAllVikings(string $name = "", int $limit = 10, int $offset = 0) {
     return null;
 }
 
-function createViking(string $name, int $health, int $attack, int $defense, $weaponId = null) {
+function createViking(string $name, int $health, int $attack, int $defense, $weaponId) {
     $db = getDatabaseConnection();
-    $sql = "INSERT INTO viking (name, health, attack, defense, weaponId) VALUES (:name, :health, :attack, :defense, :weaponId)";
+    $sql = "INSERT INTO viking (name, health, attack, defense, weapon) VALUES (:name, :health, :attack, :defense, :weaponId)";
     $stmt = $db->prepare($sql);
     $res = $stmt->execute([
         'name' => $name,
@@ -56,9 +53,9 @@ function createViking(string $name, int $health, int $attack, int $defense, $wea
     return null;
 }
 
-function updateViking(string $id, string $name, int $health, int $attack, int $defense, $weaponId = null) {
+function updateViking(string $id, string $name, int $health, int $attack, int $defense, $weaponId) {
     $db = getDatabaseConnection();
-    $sql = "UPDATE viking SET name = :name, health = :health, attack = :attack, defense = :defense, weaponId = :weaponId WHERE id = :id";
+    $sql = "UPDATE viking SET name = :name, health = :health, attack = :attack, defense = :defense, weapon = :weaponId WHERE id = :id";
     $stmt = $db->prepare($sql);
     $res = $stmt->execute([
         'id' => $id,
@@ -76,7 +73,7 @@ function updateViking(string $id, string $name, int $health, int $attack, int $d
 
 function updateVikingWeapon(string $vikingId, $weaponId) {
     $db = getDatabaseConnection();
-    $sql = "UPDATE viking SET weaponId = :weaponId WHERE id = :id";
+    $sql = "UPDATE viking SET weapon = :weaponId WHERE id = :id";
     $stmt = $db->prepare($sql);
     $res = $stmt->execute([
         'id' => $vikingId,
@@ -101,7 +98,7 @@ function deleteViking(string $id) {
 
 function findVikingsByWeapon($weaponId) {
     $db = getDatabaseConnection();
-    $sql = "SELECT id, name FROM viking WHERE weaponId = :weaponId";
+    $sql = "SELECT id, name FROM viking WHERE weapon = :weaponId";
     $stmt = $db->prepare($sql);
     $res = $stmt->execute(['weaponId' => $weaponId]);
     if ($res) {

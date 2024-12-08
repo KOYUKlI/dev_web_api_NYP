@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
     if ($deleted == 1) {
         // Mettre à jour les vikings qui avaient cette arme
         $db = getDatabaseConnection();
-        $sql = "UPDATE viking SET weaponId = NULL WHERE weaponId = :weaponId";
+        $sql = "UPDATE viking SET weapon = NULL WHERE weapon = :weaponId";
         $stmt = $db->prepare($sql);
         $stmt->execute(['weaponId' => $id]);
 

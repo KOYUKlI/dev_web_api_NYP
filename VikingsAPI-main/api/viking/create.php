@@ -16,9 +16,10 @@ $data = getBody();
 if (validateMandatoryParams($data, ['name', 'health', 'attack', 'defense'])) {
     verifyViking($data);
 
-    $weaponId = isset($data['weaponId']) ? intval($data['weaponId']) : null;
+    $weaponId = isset($data['weapon']) ? intval($data['weapon']) : null;
 
-    if ($weaponId !== null) {
+    if ($weaponId == null) {
+        $weaponId=1;
         $weapon = findOneWeapon($weaponId);
         if (!$weapon) {
             returnError(400, 'Weapon does not exist');
